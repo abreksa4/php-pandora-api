@@ -13,30 +13,70 @@ use GuzzleHttp\Client;
 class Pandora
 {
 
+    CONST accessory_accessoryConnect = 'accessory.accessoryConnect';
+    CONST ad_getAdMetadata = 'ad.getAdMetadata';
+    CONST ad_registerAd = 'ad.registerAd';
+    CONST auth_getAdMetadata = 'auth.getAdMetadata';
+    CONST auth_partnerAdminLogin = 'auth.partnerAdminLogin';
+    CONST auth_partnerLogin = 'auth.partnerLogin';
+    CONST auth_userLogin = 'auth.userLogin';
     CONST bookmark_addArtistBookmark = 'bookmark.addArtistBookmark';
     CONST bookmark_addSongBookmark = 'bookmark.addSongBookmark';
+    CONST bookmark_deleteArtistBookmark = 'bookmark.deleteArtistBookmark';
+    CONST bookmark_deleteSongBookmark = 'bookmark.deleteSongBookmark';
+    CONST device_associateDeviceForCasting = 'device.associateDeviceForCasting';
+    CONST device_createDevice = 'device.createDevice';
+    CONST device_disassociateCastingDevice = 'device.disassociateCastingDevice';
+    CONST device_disassociateDevice = 'device.disassociateDevice';
+    CONST music_getSearchRecommendations = 'music.getSearchRecommendations';
+    CONST music_getTrack = 'music.getTrack';
+    CONST music_publishSongShare = 'music.publishSongShare';
     CONST music_search = 'music.search';
+    CONST music_shareMusic = 'music.shareMusic';
     CONST station_addFeedback = 'station.addFeedback';
     CONST station_addMusic = 'station.addMusic';
     CONST station_createStation = 'station.createStation';
     CONST station_deleteFeedback = 'station.deleteFeedback';
     CONST station_deleteMusic = 'station.deleteMusic';
     CONST station_deleteStation = 'station.deleteStation';
-    CONST station_getGenreStations = 'station.getGenreStations';
     CONST station_getGenreStationsChecksum = 'station.getGenreStationsChecksum';
+    CONST station_getGenreStations = 'station.getGenreStations';
     CONST station_getPlaylist = 'station.getPlaylist';
     CONST station_getStation = 'station.getStation';
-    CONST station_shareStation = 'station.shareStation';
+    CONST station_publishStationShare = 'station.publishStationShare';
     CONST station_renameStation = 'station.renameStation';
+    CONST station_shareStation = 'station.shareStation';
     CONST station_transformSharedStation = 'station.transformSharedStation';
+    CONST test_checkLicensing = 'test.checkLicensing';
+    CONST test_echo = 'test.echo';
     CONST track_explainTrack = 'track.explainTrack';
+    CONST track_trackStarted = 'track.trackStarted';
+    CONST user_accountMessageDismissed = 'user.accountMessageDismissed';
+    CONST user_acknowledgeSubscriptionExpiration = 'user.acknowledgeSubscriptionExpiration';
+    CONST user_associateDevice = 'user.associateDevice';
+    CONST user_authorizeFacebook = 'user.authorizeFacebook';
     CONST user_canSubscribe = 'user.canSubscribe';
+    CONST user_changeSettings = 'user.changeSettings';
     CONST user_createUser = 'user.createUser';
+    CONST user_disconnectFacebook = 'user.disconnectFacebook';
+    CONST user_emailPassword = 'user.emailPassword';
+    CONST user_facebookAuthFailed = 'user.facebookAuthFailed';
     CONST user_getBookmarks = 'user.getBookmarks';
-    CONST user_getStationList = 'user.getStationList';
+    CONST user_getFacebookInfo = 'user.getFacebookInfo';
+    CONST user_getSettings = 'user.getSettings';
     CONST user_getStationListChecksum = 'user.getStationListChecksum';
+    CONST user_getStationList = 'user.getStationList';
+    CONST user_getUsageInfo = 'user.getUsageInfo';
+    CONST user_purchaseAmazonPayToPlay = 'user.purchaseAmazonPayToPlay';
+    CONST user_purchaseAmazonSubscription = 'user.purchaseAmazonSubscription';
+    CONST user_purchaseGooglePayToPlay = 'user.purchaseGooglePayToPlay';
+    CONST user_purchaseGoogleSubscription = 'user.purchaseGoogleSubscription';
+    CONST user_purchaseItunesSubscription = 'user.purchaseItunesSubscription';
+    CONST user_setAwareOfProfile = 'user.setAwareOfProfile';
+    CONST user_setExplicitContentFilter = 'user.setExplicitContentFilter';
     CONST user_setQuickMix = 'user.setQuickMix';
     CONST user_sleepSong = 'user.sleepSong';
+    CONST user_startComplimentaryTrial = 'user.startComplimentaryTrial';
 
     public $last_error;
     public $last_request_data;
@@ -287,6 +327,8 @@ class Pandora
      * | user.getStationListChecksum      | -none-
      * | user.setQuickMix                 | (array) quickMixStationIds
      * | user.sleepSong                   | (string) trackToken
+     *
+     * For a full, up-to-date listing see https://6xq.net/pandora-apidoc/json/
      *
      * @param string $method
      * @param array $params

@@ -6,7 +6,7 @@ Current Dependencies:
 
 * php_openssl
 
-Thanks to contributors of http://pan-do-ra-api.wikia.com/wiki/Pan-do-ra_API_Wiki for reverse engineering.
+Thanks to contributors of http://pan-do-ra-api.wikia.com/wiki/Pan-do-ra_API_Wiki and [https://6xq.net/pandora-apidoc/json/](https://6xq.net/pandora-apidoc/json/) for reverse engineering.
 
 ## Example Usage
 
@@ -62,4 +62,4 @@ echo '</pre>';
 | user.setQuickMix                 | (array)quickMixStationIds
 | user.sleepSong                   | (string)trackToken
 
-For a full, up-to-date listing see http://pan-do-ra-api.wikia.com/wiki/Pan-do-ra_API_Wiki.
+For a full, up-to-date listing see [https://6xq.net/pandora-apidoc/json/](https://6xq.net/pandora-apidoc/json/).
