@@ -137,7 +137,7 @@ class Pandora
         $this->last_request_data = $json_data;
 
         if ($encrypted) {
-            $json_data = bin2hex(mcrypt_encrypt(MCRYPT_BLOWFISH, $this->_encryption_cipher, $json_data, MCRYPT_MODE_ECB));
+            $json_data = bin2hex(@mcrypt_encrypt(MCRYPT_BLOWFISH, $this->_encryption_cipher, $json_data, MCRYPT_MODE_ECB));
         }
 
         $curl = curl_init();
@@ -168,7 +168,7 @@ class Pandora
     protected function decryptSyncTime($sync_time_encypted)
     {
         $sync_time_encypted = hex2bin($sync_time_encypted);
-        $sync_time_decypted = mcrypt_decrypt(MCRYPT_BLOWFISH, $this->_decryption_cipher, $sync_time_encypted, MCRYPT_MODE_ECB);
+        $sync_time_decypted = @mcrypt_decrypt(MCRYPT_BLOWFISH, $this->_decryption_cipher, $sync_time_encypted, MCRYPT_MODE_ECB);
 
         return intval(substr($sync_time_decypted, 4));
     }
