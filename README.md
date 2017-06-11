@@ -5,14 +5,13 @@
 Current Dependencies:
 
 * php_openssl
-* php_mcrypt
 
 Thanks to contributors of http://pan-do-ra-api.wikia.com/wiki/Pan-do-ra_API_Wiki for reverse engineering.
 
 ## Example Usage
 
 ```php
-require_once 'src/php_pandora_api/Pandora.php';
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 use php_pandora_api\Pandora;
 
