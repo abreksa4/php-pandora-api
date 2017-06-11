@@ -10,6 +10,35 @@ namespace php_pandora_api;
 
 class Pandora
 {
+
+    CONST bookmark_addArtistBookmark = 'bookmark.addArtistBookmark';
+    CONST bookmark_addSongBookmark = 'bookmark.addSongBookmark';
+    CONST music_search = 'music.search';
+    CONST station_addFeedback = 'station.addFeedback';
+    CONST station_addMusic = 'station.addMusic';
+    CONST station_createStation = 'station.createStation';
+    CONST station_deleteFeedback = 'station.deleteFeedback';
+    CONST station_deleteMusic = 'station.deleteMusic';
+    CONST station_deleteStation = 'station.deleteStation';
+    CONST station_getGenreStations = 'station.getGenreStations';
+    CONST station_getGenreStationsChecksum = 'station.getGenreStationsChecksum';
+    CONST station_getPlaylist = 'station.getPlaylist';
+    CONST station_getStation = 'station.getStation';
+    CONST station_shareStation = 'station.shareStation';
+    CONST station_renameStation = 'station.renameStation';
+    CONST station_transformSharedStation = 'station.transformSharedStation';
+    CONST track_explainTrack = 'track.explainTrack';
+    CONST user_canSubscribe = 'user.canSubscribe';
+    CONST user_createUser = 'user.createUser';
+    CONST user_getBookmarks = 'user.getBookmarks';
+    CONST user_getStationList = 'user.getStationList';
+    CONST user_getStationListChecksum = 'user.getStationListChecksum';
+    CONST user_setQuickMix = 'user.setQuickMix';
+    CONST user_sleepSong = 'user.sleepSong';
+
+    public $last_error;
+    public $last_request_data;
+    public $last_response_data;
     protected $_username;
     protected $_password;
     protected $_partner_username;
@@ -20,12 +49,8 @@ class Pandora
     protected $_endpoint_version;
     protected $_json_endpoint;
     protected $_endpoint_mode;
-
     protected $_current_params;
     protected $_last_synctime;
-    public $last_error;
-    public $last_request_data;
-    public $last_response_data;
 
     public function __construct($partner_username = 'android')
     {
@@ -35,12 +60,12 @@ class Pandora
         (
             // tuner.pandora.com
             'android' => array('AC7IBG09A3DTSYM4R41UJWL07VLN8JI7', 'android-generic', 'R=U!LH$O2B#', '6#26FRL$ZWD', false),
-            'iphone'  => array('P2E4FC0EAD3*878N92B2CDp34I0B1@388137C', 'IP01', '20zE1E47BE57$51', '721^26xE22776', false),
-            'palm'    => array('IUC7IBG09A3JTSYM4N11UJWL07VLH8JP0', 'pre', 'E#U$MY$O2B=', '%526CBL$ZU3', false),
-            'winmo'   => array('ED227E10a628EB0E8Pm825Dw7114AC39', 'VERIZON_MOTOQ9C', '7D671jt0C5E5d251', 'v93C8C2s12E0EBD', false),
+            'iphone' => array('P2E4FC0EAD3*878N92B2CDp34I0B1@388137C', 'IP01', '20zE1E47BE57$51', '721^26xE22776', false),
+            'palm' => array('IUC7IBG09A3JTSYM4N11UJWL07VLH8JP0', 'pre', 'E#U$MY$O2B=', '%526CBL$ZU3', false),
+            'winmo' => array('ED227E10a628EB0E8Pm825Dw7114AC39', 'VERIZON_MOTOQ9C', '7D671jt0C5E5d251', 'v93C8C2s12E0EBD', false),
 
             // internal-tuner.pandora.com
-            'pandora one'   => array('TVCKIBGS9AO9TSYLNNFUML0743LH82D', 'D01', 'U#IO$RZPAB%VX2', '2%3WCL*JU$MP]4', true),
+            'pandora one' => array('TVCKIBGS9AO9TSYLNNFUML0743LH82D', 'D01', 'U#IO$RZPAB%VX2', '2%3WCL*JU$MP]4', true),
             'windowsgadget' => array('EVCCIBGS9AOJTSYMNNFUML07VLH8JYP0', 'WG01', 'E#IO$MYZOAB%FVR2', '%22CML*ZU$8YXP[1', true),
         );
 
@@ -52,15 +77,15 @@ class Pandora
         $this->_endpoint_mode = 'json';
 
         list
-        (
+            (
             $this->_partner_password,
             $this->_device_model,
             $this->_decryption_cipher,
             $this->_encryption_cipher,
             $use_internal_tuner
-        ) = $available_partners[$partner_username];
+            ) = $available_partners[$partner_username];
 
-        $endpoint_host = ($use_internal_tuner)? 'internal-tuner.pandora.com' : 'tuner.pandora.com';
+        $endpoint_host = ($use_internal_tuner) ? 'internal-tuner.pandora.com' : 'tuner.pandora.com';
         $json_endpoint_base = '/services/json/';
 
         $this->_json_endpoint = "//{$endpoint_host}{$json_endpoint_base}";
@@ -82,10 +107,10 @@ class Pandora
             'auth.partnerLogin',
             array
             (
-                'username'        => $this->_partner_username,
-                'password'        => $this->_partner_password,
+                'username' => $this->_partner_username,
+                'password' => $this->_partner_password,
                 'deviceModel' => $this->_device_model,
-                'version'         => $this->_endpoint_version
+                'version' => $this->_endpoint_version
             ),
             false,
             true
@@ -102,11 +127,11 @@ class Pandora
             'auth.userLogin',
             array
             (
-                'loginType'                => 'user',
-                'username'                 => $this->_username,
-                'password'                 => $this->_password,
+                'loginType' => 'user',
+                'username' => $this->_username,
+                'password' => $this->_password,
                 'partnerAuthToken' => $this->_current_params['auth_token'],
-                'syncTime'                 => $this->_last_synctime
+                'syncTime' => $this->_last_synctime
             ),
             true
         );
@@ -131,7 +156,7 @@ class Pandora
         $protocol = (!$ssl) ? 'http:' : 'https:';
 
         $url_params = $this->_current_params + array('method' => $method);
-        $url = ($protocol.$this->_json_endpoint.'?'.http_build_query($url_params));
+        $url = ($protocol . $this->_json_endpoint . '?' . http_build_query($url_params));
 
         $json_data = json_encode($data);
         $this->last_request_data = $json_data;
@@ -153,7 +178,7 @@ class Pandora
         $response = json_decode($json_response, true);
 
         if (!isset($response['stat']) || $response['stat'] != 'ok') {
-            $this->last_error = $response['message'].' ('.$this->defineErrorCode($response['code']).')';
+            $this->last_error = $response['message'] . ' (' . $this->defineErrorCode($response['code']) . ')';
 
             return false;
         }
@@ -163,14 +188,6 @@ class Pandora
         }
 
         return $response['result'];
-    }
-
-    protected function decryptSyncTime($sync_time_encypted)
-    {
-        $sync_time_encypted = hex2bin($sync_time_encypted);
-        $sync_time_decypted = @mcrypt_decrypt(MCRYPT_BLOWFISH, $this->_decryption_cipher, $sync_time_encypted, MCRYPT_MODE_ECB);
-
-        return intval(substr($sync_time_decypted, 4));
     }
 
     protected function defineErrorCode($error_code)
@@ -226,6 +243,14 @@ class Pandora
         return isset($error_codes[$error_code]) ? $error_codes[$error_code] : 'UNKNOWN_ERROR';
     }
 
+    protected function decryptSyncTime($sync_time_encypted)
+    {
+        $sync_time_encypted = hex2bin($sync_time_encypted);
+        $sync_time_decypted = @mcrypt_decrypt(MCRYPT_BLOWFISH, $this->_decryption_cipher, $sync_time_encypted, MCRYPT_MODE_ECB);
+
+        return intval(substr($sync_time_decypted, 4));
+    }
+
     /**
      * Send a request off to Pandora and hope for the best :)
      *
@@ -270,7 +295,7 @@ class Pandora
             $params + array
             (
                 'userAuthToken' => $this->_current_params['auth_token'],
-                'syncTime'            => $this->_last_synctime
+                'syncTime' => $this->_last_synctime
             ),
             true,
             false
