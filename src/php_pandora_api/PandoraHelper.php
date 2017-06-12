@@ -53,20 +53,20 @@ class PandoraHelper
         return $this->_pandora->login($username, $password);
     }
 
-    public function getStations()
+    public function getStations($options = [])
     {
-        $response = $this->_pandora->makeRequest(Pandora::user_getStationList);
+        $response = $this->_pandora->makeRequest(Pandora::user_getStationList, $options);
         if ($response === false) {
             return false;
         }
         return $response['stations'];
     }
 
-    public function getSongs($station_token)
+    public function getSongs($station_token, $options = [])
     {
-        $response = $this->_pandora->makeRequest(Pandora::station_getPlaylist, [
+        $response = $this->_pandora->makeRequest(Pandora::station_getPlaylist, array_merge([
             'stationToken' => $station_token
-        ]);
+        ], $options));
         if ($response === false) {
             return false;
         }
