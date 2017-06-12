@@ -190,6 +190,38 @@ class Pandora
         return true;
     }
 
+    /**
+     * @return array
+     */
+    public function getCurrentParams()
+    {
+        return $this->_current_params;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastSynctime()
+    {
+        return $this->_last_synctime;
+    }
+
+    /**
+     * @param mixed $last_synctime
+     */
+    public function setLastSynctime($last_synctime)
+    {
+        $this->_last_synctime = $last_synctime;
+    }
+
+    /**
+     * @param array $current_params
+     */
+    public function setCurrentParams($current_params)
+    {
+        $this->_current_params = $current_params;
+    }
+
     protected function sendRequest($method, $data, $encrypted = false, $ssl = false)
     {
         return $this->sendJsonRequest($method, $data, $encrypted, $ssl);
