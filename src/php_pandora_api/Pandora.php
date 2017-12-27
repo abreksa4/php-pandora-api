@@ -238,7 +238,7 @@ class Pandora
         $this->last_request_data = $json_data;
 
         if ($encrypted) {
-            $json_data = bin2hex(mcrypt_encrypt(MCRYPT_BLOWFISH, $this->_encryption_cipher, $json_data, MCRYPT_MODE_ECB));
+            $json_data = bin2hex(self::bf_ecb_encrypt($json_data, $this->_encryption_cipher));
         }
 
         $response = $this->_guzzle_client->post($url, [
@@ -322,8 +322,7 @@ class Pandora
     protected function decryptSyncTime($sync_time_encypted)
     {
         $sync_time_encypted = hex2bin($sync_time_encypted);
-        $sync_time_decypted = mcrypt_decrypt(MCRYPT_BLOWFISH, $this->_decryption_cipher, $sync_time_encypted, MCRYPT_MODE_ECB);
-
+        $sync_time_decypted = self::bf_ecb_decrypt($sync_time_encypted, $this->_decryption_cipher);
         return intval(substr($sync_time_decypted, 4));
     }
 
@@ -384,5 +383,43 @@ class Pandora
         }
 
         return $response;
+    }
+
+    /**
+     * From http://php.net/manual/en/function.openssl-encrypt.php#121545
+     *
+     * @param $data
+     * @param $key
+     * @return string
+     */
+    public static function bf_ecb_encrypt($data, $key)
+    {
+        $l = strlen($key);
+        if ($l < 16)
+            $key = str_repeat($key, ceil(16 / $l));
+
+        if ($m = strlen($data) % 8) {
+            $data .= str_repeat("\x00", 8 - $m);
+        }
+        $val = openssl_encrypt($data, 'BF-ECB', $key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING);
+
+        return $val;
+    }
+
+    /**
+     * From http://php.net/manual/en/function.openssl-encrypt.php#121545
+     *
+     * @param $data
+     * @param $key
+     * @return string
+     */
+    public static function bf_ecb_decrypt($data, $key)
+    {
+        $l = strlen($key);
+        if ($l < 16) {
+            $key = str_repeat($key, ceil(16 / $l));
+        }
+        $val = openssl_decrypt($data, 'BF-ECB', $key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING);
+        return $val;
     }
 }

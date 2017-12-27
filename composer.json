@@ -24,8 +24,7 @@
     }
   ],
   "require": {
-    "php": "5.*",
-    "ext-mcrypt": "*",
+    "php": "^7",
     "guzzlehttp/guzzle": "^6.2"
   },
   "autoload": {
