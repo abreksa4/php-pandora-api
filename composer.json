@@ -24,9 +24,8 @@
     }
   ],
   "require": {
-    "php": ">=5.3.2",
-    "ext-openssl": "*",
-    "phpseclib/mcrypt_compat": "^1.0",
+    "php": "5.*",
+    "ext-mcrypt": "*",
     "guzzlehttp/guzzle": "^6.2"
   },
   "autoload": {
